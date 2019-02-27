@@ -6,12 +6,19 @@
 /*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:07:15 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/26 16:49:13 by jcarpio-         ###   ########.fr       */
+/*   Updated: 2019/02/27 11:10:06 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+void		display_usage(char *program_name)
+{
+	ft_putstr("usage: ");
+	ft_putstr(program_name + 2);
+	ft_putstr(" source_file\n");
+}
 
 int		ft_check_parallels(unsigned int num)
 {
@@ -174,6 +181,12 @@ int		main(int arg, char **argv)
 				return (1);
 		else
 			printf("error");
+		close(fd);
+	}
+	else 
+	{
+		display_usage(argv[0]);
+		exit(1);
 	}
 	return (0);
 }
