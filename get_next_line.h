@@ -6,7 +6,7 @@
 /*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 15:28:19 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/25 15:29:05 by jcarpio-         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:49:16 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@
 # include <libft.h>
 # define BUFF_SIZE 1000
 # define FD_MAX 4864
-# define MALLCHECK(x) if (!x) return (-1);
 # define MAX_TETROMINOS 26
 
 typedef struct 	tetrominos
 {
-   	long	shape;
+   	unsigned long	shape;
 	char 	id;
 }			tet_s;
 

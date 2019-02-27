@@ -6,26 +6,23 @@
 /*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:07:15 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/25 16:32:34 by jcarpio-         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:49:13 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-int		ft_check_parallels(int num)
+int		ft_check_parallels(unsigned int num)
 {
-	int			 first_8bits;
+	unsigned int   first_8bits;
 	unsigned char first_4bits;
 
-	printf("%d \n", num);
 	if (num < 15)
 		return (1);
 	first_8bits = (num & 0xff);
-	//printf("%d first \n", first_8bits);
 	first_4bits = (first_8bits << 4) >> 4;
 	first_8bits = first_8bits >> 4;
-	//printf("%d first4 , %d first8 \n", (int)first_4bits, (int)first_8bits);
 	if ((int)(first_8bits & first_4bits) > 0)
 		return (1);
 	return (0);
@@ -47,12 +44,12 @@ int		ft_check_adjacents(int adjacents, int count)
 	return (1);
 }
 
-int		ft_check_bits(int num, int *bites, int line_box_pos)
+int		ft_check_bits(int num, int *bites, int size)
 {
 	int			adjacents;
 	unsigned int count;
 	int 		i;
-	int			paralle;
+	unsigned int		paralle;
 
 	i = 0;
 	count = 0;
@@ -89,8 +86,10 @@ unsigned	int		ft_line_to_int(char *line)
 
 int 	ft_check_box(int num, int line_box_pos)
 {
-	static int		bites = 0; 
+	static int		bites = 0;
+	int				size;
 
+	size = 4;
 	if ((line_box_pos + 1) % 5 == 0)
 	{
 		if (bites != 4)
@@ -98,7 +97,7 @@ int 	ft_check_box(int num, int line_box_pos)
 		bites = 0;
 		return (1);
 	}
-	if (!ft_check_bits(num, &bites,line_box_pos))
+	if (!ft_check_bits(num, &bites,size))
 		return (0);
 	if (bites > 4)
 		return (0);
@@ -107,17 +106,18 @@ int 	ft_check_box(int num, int line_box_pos)
 
 int			ft_add_to_struct(char *line, tet_s (*tet)[], int line_box_pos, int *tet_pos)
 {
-	int 	value;
+	unsigned int	value;
 	
 	value = 0;
 	if ((line_box_pos + 1) % 5 == 0)
 		return (++(*tet_pos));
 	value = ft_line_to_int(line);
-
 	if ((*tet)[*tet_pos].shape == 0)
 		(*tet)[*tet_pos].shape = value;
 	else
-		(*tet)[*tet_pos].shape = ((*tet)[*tet_pos].shape << 4) + value;	
+	{
+		(*tet)[*tet_pos].shape = ((*tet)[*tet_pos].shape << 4u) + value;
+	}
 	return (1);
 }
 
@@ -126,13 +126,10 @@ int			ft_check_line(char *line, int line_box_pos)
 	int		i;
 
 	i = 0;
-	printf("%s line\n", line);
 	if ((line_box_pos + 1) % 5 == 0 && *(line) == '\0')
 		return (4);
 	while(*(line + i) == '.' || *(line + i) == '#')
 		i++;
-//	printf("%d i  \n", i);
-	//printf("%c char \n", *(line + 1));
 	if (i == 4 && *(line + i) == '\0')
 		return (10);
 	return (0);
@@ -149,13 +146,15 @@ int		ft_get_input(int fd, tet_s  (*tet)[])
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_check_line(line, line_box_pos))
-			return (-4);
+			return (0);
 		if (!ft_add_to_struct(line, tet, line_box_pos,&tet_pos))
-			return (-1);
+			return (0);
 		if (!ft_check_box(((*tet)[tet_pos]).shape, line_box_pos))
-			return (-40);
+			return (0);
 		line_box_pos++;
 	}
+	if ((*tet)[3].shape == 0)
+		return (0);
 	return (2);
 }
 
@@ -165,6 +164,7 @@ int		main(int arg, char **argv)
 	tet_s 		tet[MAX_TETROMINOS];
 	int 		test;
 
+	ft_bzero(tet, sizeof(tet));
 	if (arg == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
