@@ -6,7 +6,7 @@
 /*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 15:28:19 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/26 16:49:16 by jcarpio-         ###   ########.fr       */
+/*   Updated: 2019/02/27 15:56:29 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@
 # include <libft.h>
 # define BUFF_SIZE 1000
 # define FD_MAX 4864
-# define MAX_TETROMINOS 26
-
-typedef struct 	tetrominos
-{
-   	unsigned long	shape;
-	char 	id;
-}			tet_s;
 
 int		get_next_line(const int fd, char **line);
 char	*ft_strjoinfree(char *s1, const char *s2);
