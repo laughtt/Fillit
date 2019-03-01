@@ -6,7 +6,7 @@
 /*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 15:52:29 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/27 16:23:43 by jcarpio-         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:49:40 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int			ft_add_to_struct(char *line, tet_s (*tet)[], int line_box_pos, int *tet_po
 		return (++(*tet_pos));
 	value = ft_line_to_int(line);
 	if ((*tet)[*tet_pos].shape == 0)
+	{
 		(*tet)[*tet_pos].shape = value;
+		(*tet)[*tet_pos].id = *tet_pos + 'A';
+	}
 	else
 	{
 		(*tet)[*tet_pos].id = *tet_pos + 'A'; 
@@ -65,7 +68,7 @@ int			ft_check_line(char *line, int line_box_pos)
 	return (0);
 }
 
-int		ft_get_input(int fd, tet_s  (*tet)[])
+int		ft_get_input(int fd, tet_s  (*tet)[], int *size)
 {
 	char	*line;
 	int 	line_box_pos;
@@ -83,6 +86,7 @@ int		ft_get_input(int fd, tet_s  (*tet)[])
 			return (0);
 		line_box_pos++;
 	}
+	*size = tet_pos + 1;
 	if ((*tet)[3].shape == 0)
 		return (0);
 	return (2);

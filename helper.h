@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   helper.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcarpio- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nhennigh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/27 15:53:37 by jcarpio-          #+#    #+#             */
-/*   Updated: 2019/02/28 17:47:36 by jcarpio-         ###   ########.fr       */
+/*   Created: 2019/02/21 19:07:14 by nhennigh          #+#    #+#             */
+/*   Updated: 2019/02/28 14:57:10 by jcarpio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	FILLIT_H
-# define FILLIT_H
+#ifndef HELPER_H
+# define HELPER_H
 # define MAX_TETROMINOS 26
 
-typedef struct tetrominos
+typedef struct 	tetrominos
 {
-	long	shape;
+   	long	shape;
 	char 	id;
-}		tet_s;
-
+}			tet_s;
 
 static unsigned long long	g_pointers[10000];
 static int					g_pointer_cnt = 0;
@@ -34,18 +33,7 @@ int					left_side(unsigned long long *d, int s, int i);
 int					right_side(unsigned long long *d, int s, int i, int all);
 int					top_row(unsigned long long *d, int s, int i);
 int					bottom_row(unsigned long long *d, int s, int i);
-unsigned long long	reset_block(unsigned long long block, int size);
-unsigned long long	remove_above(unsigned long long data, int group, int size);
+int					check_box(unsigned long long block, int size);
 tet_s				*solve(tet_s (*blocks)[], int idx, int size);
-void				display_usage(char *program_name);
-int					ft_check_parallels(unsigned int num);
-int					ft_check_adjacents(int adjacents, int count);
-int					ft_check_bits(int num, int *bites, int size);
-unsigned int		ft_line_to_int(char *line);
-int					ft_check_box(int num, int line_box_pos);
-int					ft_add_to_struct(char *line, tet_s (*tet)[], int line_box_pos, int *tet_pos);
-int					ft_check_line(char *line, int line_box_pos);
-int					ft_get_input(int fd, tet_s (*tet)[], int *size);
-int					check_fit(unsigned long long map, long block);
 
 #endif
